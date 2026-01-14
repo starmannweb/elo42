@@ -50,12 +50,12 @@ const features = [
 
 export default function HomePage() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-violet-50 via-white to-purple-50 dark:from-gray-950 dark:via-gray-900 dark:to-violet-950">
+    <div className="min-h-screen bg-gradient-to-br from-[#004E7F]/5 via-white to-[#004E7F]/5 dark:from-gray-950 dark:via-gray-900 dark:to-gray-950">
       {/* Header */}
       <header className="border-b bg-white/80 backdrop-blur-sm dark:bg-gray-950/80 sticky top-0 z-50">
         <div className="container mx-auto px-4 h-16 flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <Church className="h-8 w-8 text-violet-600" />
+            <Church className="h-8 w-8 text-[#004E7F]" />
             <span className="font-bold text-xl">Elo 42</span>
           </div>
           <nav className="hidden md:flex items-center gap-6">
@@ -71,7 +71,7 @@ export default function HomePage() {
               <Button variant="ghost">Entrar</Button>
             </Link>
             <Link href="/register">
-              <Button className="bg-violet-600 hover:bg-violet-700">
+              <Button className="bg-[#004E7F] hover:bg-[#003d63]">
                 Começar Grátis
               </Button>
             </Link>
@@ -81,12 +81,12 @@ export default function HomePage() {
 
       {/* Hero */}
       <section className="container mx-auto px-4 py-20 md:py-32 text-center">
-        <div className="inline-flex items-center gap-2 bg-violet-100 dark:bg-violet-900/30 text-violet-700 dark:text-violet-300 px-4 py-2 rounded-full text-sm font-medium mb-6">
+        <div className="inline-flex items-center gap-2 bg-[#004E7F]/10 dark:bg-[#002540]/30 text-[#003d63] dark:text-violet-300 px-4 py-2 rounded-full text-sm font-medium mb-6">
           <Sparkles className="h-4 w-4" />
           Sistema 100% Gratuito
         </div>
 
-        <h1 className="text-4xl md:text-6xl font-bold tracking-tight mb-6 bg-gradient-to-r from-violet-600 via-purple-600 to-violet-800 bg-clip-text text-transparent">
+        <h1 className="text-4xl md:text-6xl font-bold tracking-tight mb-6 bg-gradient-to-r from-[#004E7F] via-[#004E7F] to-[#003050] bg-clip-text text-transparent">
           Gestão completa para<br />sua igreja
         </h1>
 
@@ -97,7 +97,7 @@ export default function HomePage() {
 
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
           <Link href="/register">
-            <Button size="lg" className="bg-violet-600 hover:bg-violet-700 text-lg px-8">
+            <Button size="lg" className="bg-[#004E7F] hover:bg-[#003d63] text-lg px-8">
               Criar Conta Grátis
               <ArrowRight className="ml-2 h-5 w-5" />
             </Button>
@@ -134,8 +134,8 @@ export default function HomePage() {
           {features.map((feature, index) => (
             <Card key={index} className="border-0 shadow-lg hover:shadow-xl transition-shadow bg-white/80 dark:bg-gray-900/80 backdrop-blur">
               <CardHeader>
-                <div className="h-12 w-12 rounded-lg bg-violet-100 dark:bg-violet-900/30 flex items-center justify-center mb-4">
-                  <feature.icon className="h-6 w-6 text-violet-600" />
+                <div className="h-12 w-12 rounded-lg bg-[#004E7F]/10 dark:bg-[#002540]/30 flex items-center justify-center mb-4">
+                  <feature.icon className="h-6 w-6 text-[#004E7F]" />
                 </div>
                 <CardTitle className="text-lg">{feature.title}</CardTitle>
                 <CardDescription>{feature.description}</CardDescription>
@@ -147,12 +147,12 @@ export default function HomePage() {
 
       {/* CTA */}
       <section className="container mx-auto px-4 py-20">
-        <Card className="bg-gradient-to-r from-violet-600 to-purple-700 border-0 text-white">
+        <Card className="bg-gradient-to-r from-[#004E7F] to-purple-700 border-0 text-white">
           <CardContent className="p-8 md:p-12 text-center">
             <h2 className="text-2xl md:text-3xl font-bold mb-4">
               Pronto para transformar a gestão da sua igreja?
             </h2>
-            <p className="text-violet-100 mb-8 max-w-xl mx-auto">
+            <p className="text-[#004E7F]/10 mb-8 max-w-xl mx-auto">
               Comece gratuitamente hoje e veja como o Elo 42 pode ajudar sua comunidade a crescer.
             </p>
             <Link href="/register">
@@ -170,7 +170,7 @@ export default function HomePage() {
         <div className="container mx-auto px-4 py-8">
           <div className="flex flex-col md:flex-row items-center justify-between gap-4">
             <div className="flex items-center gap-2">
-              <Church className="h-6 w-6 text-violet-600" />
+              <Church className="h-6 w-6 text-[#004E7F]" />
               <span className="font-bold">Elo 42</span>
             </div>
             <p className="text-sm text-muted-foreground">

@@ -174,7 +174,7 @@ export default function SettingsPage() {
 
                             <div className="flex justify-end">
                                 <Button
-                                    className="bg-violet-600 hover:bg-violet-700"
+                                    className="bg-[#004E7F] hover:bg-[#003d63]"
                                     onClick={handleSaveChurch}
                                     disabled={isLoading}
                                 >
@@ -257,7 +257,7 @@ export default function SettingsPage() {
 
                             <div className="flex justify-end">
                                 <Button
-                                    className="bg-violet-600 hover:bg-violet-700"
+                                    className="bg-[#004E7F] hover:bg-[#003d63]"
                                     onClick={handleSaveSocial}
                                     disabled={isLoading}
                                 >
@@ -355,7 +355,7 @@ export default function SettingsPage() {
 
                             <div className="flex justify-end">
                                 <Button
-                                    className="bg-violet-600 hover:bg-violet-700"
+                                    className="bg-[#004E7F] hover:bg-[#003d63]"
                                     onClick={handleSaveTheme}
                                     disabled={isLoading}
                                 >

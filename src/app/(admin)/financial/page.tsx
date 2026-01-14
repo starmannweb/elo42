@@ -42,9 +42,11 @@ import {
     Loader2,
     MoreHorizontal,
     Edit,
-    Trash2
+    Trash2,
+    FileDown
 } from "lucide-react";
 import { toast } from "sonner";
+import { generateFinancialReport } from "@/lib/pdf-reports";
 
 interface Transaction {
     id: string;
@@ -186,6 +188,26 @@ export default function FinancialPage() {
                 <div className="flex gap-2">
                     <Button
                         variant="outline"
+                        className="border-[#004E7F] text-[#004E7F] hover:bg-[#004E7F]/10"
+                        onClick={() => {
+                            generateFinancialReport(
+                                transactions.map(t => ({
+                                    type: t.type,
+                                    category: t.category,
+                                    description: t.description,
+                                    date: t.date,
+                                    amount: t.amount
+                                })),
+                                "Janeiro 2026"
+                            );
+                            toast.success("PDF gerado com sucesso!");
+                        }}
+                    >
+                        <FileDown className="mr-2 h-4 w-4" />
+                        Exportar PDF
+                    </Button>
+                    <Button
+                        variant="outline"
                         className="border-green-600 text-green-600 hover:bg-green-50"
                         onClick={() => handleOpenDialog("income")}
                     >
@@ -228,7 +250,7 @@ export default function FinancialPage() {
                 <Card>
                     <CardHeader className="flex flex-row items-center justify-between pb-2">
                         <CardTitle className="text-sm font-medium text-muted-foreground">Saldo</CardTitle>
-                        <Wallet className="h-4 w-4 text-violet-600" />
+                        <Wallet className="h-4 w-4 text-[#004E7F]" />
                     </CardHeader>
                     <CardContent>
                         <div className={`text-2xl font-bold ${balance >= 0 ? 'text-green-600' : 'text-red-600'}`}>
@@ -256,7 +278,7 @@ export default function FinancialPage() {
 
                     {isLoading ? (
                         <div className="flex items-center justify-center py-10">
-                            <Loader2 className="h-8 w-8 animate-spin text-violet-600" />
+                            <Loader2 className="h-8 w-8 animate-spin text-[#004E7F]" />
                         </div>
                     ) : filteredTransactions.length === 0 ? (
                         <div className="text-center py-10">

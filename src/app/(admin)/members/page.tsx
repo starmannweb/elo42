@@ -131,7 +131,7 @@ export default function MembersPage() {
                     <p className="text-muted-foreground">Gerencie os membros da sua igreja</p>
                 </div>
                 <Link href="/members/new">
-                    <Button className="bg-violet-600 hover:bg-violet-700">
+                    <Button className="bg-[#004E7F] hover:bg-[#003d63]">
                         <Plus className="mr-2 h-4 w-4" />
                         Novo Membro
                     </Button>
@@ -143,7 +143,7 @@ export default function MembersPage() {
                 <Card>
                     <CardHeader className="flex flex-row items-center justify-between pb-2">
                         <CardTitle className="text-sm font-medium text-muted-foreground">Total</CardTitle>
-                        <Users className="h-4 w-4 text-violet-600" />
+                        <Users className="h-4 w-4 text-[#004E7F]" />
                     </CardHeader>
                     <CardContent>
                         <div className="text-2xl font-bold">{stats.total}</div>
@@ -202,7 +202,7 @@ export default function MembersPage() {
                                 variant={statusFilter === "all" ? "default" : "outline"}
                                 size="sm"
                                 onClick={() => setStatusFilter("all")}
-                                className={statusFilter === "all" ? "bg-violet-600" : ""}
+                                className={statusFilter === "all" ? "bg-[#004E7F]" : ""}
                             >
                                 Todos
                             </Button>
@@ -228,7 +228,7 @@ export default function MembersPage() {
                     {/* Table */}
                     {isLoading ? (
                         <div className="flex items-center justify-center py-10">
-                            <Loader2 className="h-8 w-8 animate-spin text-violet-600" />
+                            <Loader2 className="h-8 w-8 animate-spin text-[#004E7F]" />
                         </div>
                     ) : filteredMembers.length === 0 ? (
                         <div className="text-center py-10">
@@ -241,7 +241,7 @@ export default function MembersPage() {
                             </p>
                             {!searchTerm && statusFilter === "all" && (
                                 <Link href="/members/new">
-                                    <Button className="bg-violet-600 hover:bg-violet-700">
+                                    <Button className="bg-[#004E7F] hover:bg-[#003d63]">
                                         <Plus className="mr-2 h-4 w-4" />
                                         Adicionar Membro
                                     </Button>

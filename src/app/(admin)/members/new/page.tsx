@@ -195,7 +195,7 @@ export default function NewMemberPage() {
                     </Link>
                     <Button
                         type="submit"
-                        className="bg-violet-600 hover:bg-violet-700"
+                        className="bg-[#004E7F] hover:bg-[#003d63]"
                         disabled={isLoading}
                     >
                         {isLoading ? (

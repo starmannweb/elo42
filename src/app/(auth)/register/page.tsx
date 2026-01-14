@@ -40,11 +40,11 @@ export default function RegisterPage() {
     };
 
     return (
-        <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-violet-50 via-white to-purple-50 dark:from-gray-950 dark:via-gray-900 dark:to-violet-950 p-4">
+        <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-[#004E7F]/5 via-white to-[#004E7F]/5 dark:from-gray-950 dark:via-gray-900 dark:to-gray-950 p-4">
             <Card className="w-full max-w-md border-0 shadow-2xl">
                 <CardHeader className="text-center pb-2">
                     <Link href="/" className="inline-flex items-center justify-center gap-2 mb-4">
-                        <Church className="h-10 w-10 text-violet-600" />
+                        <Church className="h-10 w-10 text-[#004E7F]" />
                         <span className="font-bold text-2xl">Elo 42</span>
                     </Link>
                     <CardTitle className="text-2xl">Criar conta</CardTitle>
@@ -108,7 +108,7 @@ export default function RegisterPage() {
                         </div>
                         <Button
                             type="submit"
-                            className="w-full bg-violet-600 hover:bg-violet-700"
+                            className="w-full bg-[#004E7F] hover:bg-[#003d63]"
                             disabled={isLoading}
                         >
                             {isLoading ? (
@@ -123,7 +123,7 @@ export default function RegisterPage() {
                     </form>
                     <div className="mt-6 text-center text-sm">
                         <span className="text-muted-foreground">Já tem uma conta? </span>
-                        <Link href="/login" className="text-violet-600 hover:underline font-medium">
+                        <Link href="/login" className="text-[#004E7F] hover:underline font-medium">
                             Entrar
                         </Link>
                     </div>

@@ -210,7 +210,7 @@ export default function SermonsPage() {
                     <p className="text-muted-foreground">Sermões e pregações da igreja</p>
                 </div>
                 <Button
-                    className="bg-violet-600 hover:bg-violet-700"
+                    className="bg-[#004E7F] hover:bg-[#003d63]"
                     onClick={() => handleOpenDialog()}
                 >
                     <Plus className="mr-2 h-4 w-4" />
@@ -223,7 +223,7 @@ export default function SermonsPage() {
                 <Card>
                     <CardHeader className="flex flex-row items-center justify-between pb-2">
                         <CardTitle className="text-sm font-medium text-muted-foreground">Total</CardTitle>
-                        <Headphones className="h-4 w-4 text-violet-600" />
+                        <Headphones className="h-4 w-4 text-[#004E7F]" />
                     </CardHeader>
                     <CardContent>
                         <div className="text-2xl font-bold">{sermons.length}</div>
@@ -263,7 +263,7 @@ export default function SermonsPage() {
             {/* Sermons Grid */}
             {isLoading ? (
                 <div className="flex items-center justify-center py-10">
-                    <Loader2 className="h-8 w-8 animate-spin text-violet-600" />
+                    <Loader2 className="h-8 w-8 animate-spin text-[#004E7F]" />
                 </div>
             ) : sermons.length === 0 ? (
                 <Card>
@@ -274,7 +274,7 @@ export default function SermonsPage() {
                             Adicione a primeira ministração da sua igreja
                         </p>
                         <Button
-                            className="bg-violet-600 hover:bg-violet-700"
+                            className="bg-[#004E7F] hover:bg-[#003d63]"
                             onClick={() => handleOpenDialog()}
                         >
                             <Plus className="mr-2 h-4 w-4" />
@@ -442,7 +442,7 @@ export default function SermonsPage() {
                             </Button>
                             <Button
                                 type="submit"
-                                className="bg-violet-600 hover:bg-violet-700"
+                                className="bg-[#004E7F] hover:bg-[#003d63]"
                                 disabled={isSubmitting}
                             >
                                 {isSubmitting ? (

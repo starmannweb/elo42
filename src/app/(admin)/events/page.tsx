@@ -215,7 +215,7 @@ export default function EventsPage() {
                     <p className="text-muted-foreground">Gerencie os eventos e atividades da igreja</p>
                 </div>
                 <Button
-                    className="bg-violet-600 hover:bg-violet-700"
+                    className="bg-[#004E7F] hover:bg-[#003d63]"
                     onClick={() => handleOpenDialog()}
                 >
                     <Plus className="mr-2 h-4 w-4" />
@@ -230,7 +230,7 @@ export default function EventsPage() {
                         <CardTitle className="text-sm font-medium text-muted-foreground">
                             Eventos Ativos
                         </CardTitle>
-                        <Calendar className="h-4 w-4 text-violet-600" />
+                        <Calendar className="h-4 w-4 text-[#004E7F]" />
                     </CardHeader>
                     <CardContent>
                         <div className="text-2xl font-bold">{upcomingEvents.length}</div>
@@ -267,7 +267,7 @@ export default function EventsPage() {
             {/* Events List */}
             {isLoading ? (
                 <div className="flex items-center justify-center py-10">
-                    <Loader2 className="h-8 w-8 animate-spin text-violet-600" />
+                    <Loader2 className="h-8 w-8 animate-spin text-[#004E7F]" />
                 </div>
             ) : events.length === 0 ? (
                 <Card>
@@ -278,7 +278,7 @@ export default function EventsPage() {
                             Comece criando o primeiro evento da sua igreja
                         </p>
                         <Button
-                            className="bg-violet-600 hover:bg-violet-700"
+                            className="bg-[#004E7F] hover:bg-[#003d63]"
                             onClick={() => handleOpenDialog()}
                         >
                             <Plus className="mr-2 h-4 w-4" />
@@ -335,7 +335,7 @@ export default function EventsPage() {
                                 </div>
                                 <div className="w-full bg-gray-200 rounded-full h-2 mt-2">
                                     <div
-                                        className="bg-violet-600 h-2 rounded-full transition-all"
+                                        className="bg-[#004E7F] h-2 rounded-full transition-all"
                                         style={{ width: `${(event.registrations / event.maxCapacity) * 100}%` }}
                                     />
                                 </div>
@@ -426,7 +426,7 @@ export default function EventsPage() {
                             </Button>
                             <Button
                                 type="submit"
-                                className="bg-violet-600 hover:bg-violet-700"
+                                className="bg-[#004E7F] hover:bg-[#003d63]"
                                 disabled={isSubmitting}
                             >
                                 {isSubmitting ? (

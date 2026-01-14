@@ -228,7 +228,7 @@ export default function RequestsPage() {
                 <TabsContent value={activeTab} className="mt-6">
                     {isLoading ? (
                         <div className="flex items-center justify-center py-10">
-                            <Loader2 className="h-8 w-8 animate-spin text-violet-600" />
+                            <Loader2 className="h-8 w-8 animate-spin text-[#004E7F]" />
                         </div>
                     ) : filteredRequests.length === 0 ? (
                         <Card>

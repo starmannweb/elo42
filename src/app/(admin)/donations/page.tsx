@@ -173,7 +173,7 @@ export default function DonationsPage() {
                         <CardTitle className="text-sm font-medium text-muted-foreground">
                             Doações Recebidas
                         </CardTitle>
-                        <ArrowUpRight className="h-4 w-4 text-violet-600" />
+                        <ArrowUpRight className="h-4 w-4 text-[#004E7F]" />
                     </CardHeader>
                     <CardContent>
                         <div className="text-2xl font-bold">{stats.thisMonth}</div>
@@ -212,7 +212,7 @@ export default function DonationsPage() {
                                         <Button
                                             key={value}
                                             variant={amount === String(value) ? "default" : "outline"}
-                                            className={amount === String(value) ? "bg-violet-600 hover:bg-violet-700" : ""}
+                                            className={amount === String(value) ? "bg-[#004E7F] hover:bg-[#003d63]" : ""}
                                             onClick={() => handleSelectAmount(value)}
                                         >
                                             {formatCurrency(value)}
@@ -258,7 +258,7 @@ export default function DonationsPage() {
                             </div>
 
                             <Button
-                                className="w-full bg-violet-600 hover:bg-violet-700"
+                                className="w-full bg-[#004E7F] hover:bg-[#003d63]"
                                 size="lg"
                                 onClick={handleGeneratePix}
                                 disabled={isGenerating}
@@ -327,7 +327,7 @@ export default function DonationsPage() {
                     </DialogHeader>
                     <div className="flex flex-col items-center space-y-4 py-4">
                         {/* Valor */}
-                        <div className="text-3xl font-bold text-violet-600">
+                        <div className="text-3xl font-bold text-[#004E7F]">
                             {formatCurrency(parseFloat(amount) || 0)}
                         </div>
 
@@ -375,7 +375,7 @@ export default function DonationsPage() {
                                 Fechar
                             </Button>
                             <Button
-                                className="flex-1 bg-violet-600 hover:bg-violet-700"
+                                className="flex-1 bg-[#004E7F] hover:bg-[#003d63]"
                                 onClick={handleCopyPix}
                             >
                                 <Copy className="mr-2 h-4 w-4" />

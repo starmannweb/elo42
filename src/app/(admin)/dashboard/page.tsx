@@ -93,7 +93,7 @@ export default function DashboardPage() {
                                 <CardTitle className="text-sm font-medium text-muted-foreground">
                                     {stat.title}
                                 </CardTitle>
-                                <stat.icon className="h-5 w-5 text-violet-600" />
+                                <stat.icon className="h-5 w-5 text-[#004E7F]" />
                             </CardHeader>
                             <CardContent>
                                 <div className="text-2xl font-bold">{stat.value}</div>
@@ -135,8 +135,8 @@ export default function DashboardPage() {
                             {recentRequests.map((request) => (
                                 <div key={request.id} className="flex items-center justify-between">
                                     <div className="flex items-center gap-3">
-                                        <div className="h-10 w-10 rounded-full bg-violet-100 flex items-center justify-center">
-                                            <Heart className="h-5 w-5 text-violet-600" />
+                                        <div className="h-10 w-10 rounded-full bg-[#004E7F]/10 flex items-center justify-center">
+                                            <Heart className="h-5 w-5 text-[#004E7F]" />
                                         </div>
                                         <div>
                                             <p className="font-medium text-sm">{request.name}</p>
@@ -198,7 +198,7 @@ export default function DashboardPage() {
                 <CardContent>
                     <div className="flex flex-wrap gap-3">
                         <Link href="/members?new=true">
-                            <Button className="bg-violet-600 hover:bg-violet-700">
+                            <Button className="bg-[#004E7F] hover:bg-[#003d63]">
                                 <Plus className="mr-2 h-4 w-4" />
                                 Novo Membro
                             </Button>

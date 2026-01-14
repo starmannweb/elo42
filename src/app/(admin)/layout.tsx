@@ -66,7 +66,8 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                     {/* Logo */}
                     <div className="h-16 flex items-center justify-between px-4 border-b border-gray-200 dark:border-gray-800">
                         <Link href="/dashboard" className="flex items-center gap-2">
-                            <img src="/logo.png" alt="Elo 42" className="h-10 w-auto" />
+                            <img src="/logo.png" alt="Elo 42" className="h-10 w-auto dark:hidden" />
+                            <img src="/logo-dark.png" alt="Elo 42" className="h-10 w-auto hidden dark:block" />
                         </Link>
                         <Button
                             variant="ghost"
