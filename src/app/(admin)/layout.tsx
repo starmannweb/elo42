@@ -22,13 +22,14 @@ import {
     Headphones,
     DollarSign,
     CreditCard,
+    BarChart3,
     Settings,
     LogOut,
     Menu,
     X,
     ChevronRight
 } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { cn } from "@/lib/utils";
 import { ThemeToggle } from "@/components/theme-toggle";
 
@@ -40,6 +41,7 @@ const menuItems = [
     { icon: Headphones, label: "Ministrações", href: "/sermons" },
     { icon: DollarSign, label: "Financeiro", href: "/financial" },
     { icon: CreditCard, label: "Doações PIX", href: "/donations" },
+    { icon: BarChart3, label: "Relatórios", href: "/reports" },
     { icon: Settings, label: "Configurações", href: "/settings" },
 ];
 
