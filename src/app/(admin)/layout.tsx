@@ -29,6 +29,7 @@ import {
 } from "lucide-react";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
+import { ThemeToggle } from "@/components/theme-toggle";
 
 const menuItems = [
     { icon: LayoutDashboard, label: "Dashboard", href: "/dashboard" },
@@ -56,12 +57,12 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
 
             {/* Sidebar */}
             <aside className={cn(
-                "fixed top-0 left-0 z-50 h-full w-64 bg-white dark:bg-gray-900 border-r transition-transform duration-300 lg:translate-x-0",
+                "fixed top-0 left-0 z-50 h-full w-64 bg-white dark:bg-gray-900 border-r border-gray-200 dark:border-gray-800 transition-transform duration-300 lg:translate-x-0",
                 sidebarOpen ? "translate-x-0" : "-translate-x-full"
             )}>
                 <div className="flex flex-col h-full">
                     {/* Logo */}
-                    <div className="h-16 flex items-center justify-between px-4 border-b">
+                    <div className="h-16 flex items-center justify-between px-4 border-b border-gray-200 dark:border-gray-800">
                         <Link href="/dashboard" className="flex items-center gap-2">
                             <Church className="h-8 w-8 text-violet-600" />
                             <span className="font-bold text-xl">Elo 42</span>
@@ -101,7 +102,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                     </nav>
 
                     {/* User section */}
-                    <div className="p-4 border-t">
+                    <div className="p-4 border-t border-gray-200 dark:border-gray-800">
                         <div className="flex items-center gap-3">
                             <Avatar>
                                 <AvatarFallback className="bg-violet-100 text-violet-600">AD</AvatarFallback>
@@ -118,7 +119,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
             {/* Main content */}
             <div className="lg:pl-64">
                 {/* Header */}
-                <header className="sticky top-0 z-30 h-16 bg-white dark:bg-gray-900 border-b flex items-center justify-between px-4">
+                <header className="sticky top-0 z-30 h-16 bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-800 flex items-center justify-between px-4">
                     <div className="flex items-center gap-4">
                         <Button
                             variant="ghost"
@@ -133,28 +134,31 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                         </h1>
                     </div>
 
-                    <DropdownMenu>
-                        <DropdownMenuTrigger asChild>
-                            <Button variant="ghost" className="gap-2">
-                                <Avatar className="h-8 w-8">
-                                    <AvatarFallback className="bg-violet-100 text-violet-600 text-xs">AD</AvatarFallback>
-                                </Avatar>
-                            </Button>
-                        </DropdownMenuTrigger>
-                        <DropdownMenuContent align="end" className="w-48">
-                            <DropdownMenuLabel>Minha Conta</DropdownMenuLabel>
-                            <DropdownMenuSeparator />
-                            <DropdownMenuItem>
-                                <Settings className="mr-2 h-4 w-4" />
-                                Configurações
-                            </DropdownMenuItem>
-                            <DropdownMenuSeparator />
-                            <DropdownMenuItem className="text-red-600">
-                                <LogOut className="mr-2 h-4 w-4" />
-                                Sair
-                            </DropdownMenuItem>
-                        </DropdownMenuContent>
-                    </DropdownMenu>
+                    <div className="flex items-center gap-2">
+                        <ThemeToggle />
+                        <DropdownMenu>
+                            <DropdownMenuTrigger asChild>
+                                <Button variant="ghost" className="gap-2">
+                                    <Avatar className="h-8 w-8">
+                                        <AvatarFallback className="bg-violet-100 text-violet-600 text-xs">AD</AvatarFallback>
+                                    </Avatar>
+                                </Button>
+                            </DropdownMenuTrigger>
+                            <DropdownMenuContent align="end" className="w-48">
+                                <DropdownMenuLabel>Minha Conta</DropdownMenuLabel>
+                                <DropdownMenuSeparator />
+                                <DropdownMenuItem>
+                                    <Settings className="mr-2 h-4 w-4" />
+                                    Configurações
+                                </DropdownMenuItem>
+                                <DropdownMenuSeparator />
+                                <DropdownMenuItem className="text-red-600">
+                                    <LogOut className="mr-2 h-4 w-4" />
+                                    Sair
+                                </DropdownMenuItem>
+                            </DropdownMenuContent>
+                        </DropdownMenu>
+                    </div>
                 </header>
 
                 {/* Page content */}
