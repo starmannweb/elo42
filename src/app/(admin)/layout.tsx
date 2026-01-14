@@ -21,6 +21,7 @@ import {
     Heart,
     Headphones,
     DollarSign,
+    CreditCard,
     Settings,
     LogOut,
     Menu,
@@ -38,6 +39,7 @@ const menuItems = [
     { icon: Heart, label: "Solicitações", href: "/requests" },
     { icon: Headphones, label: "Ministrações", href: "/sermons" },
     { icon: DollarSign, label: "Financeiro", href: "/financial" },
+    { icon: CreditCard, label: "Doações PIX", href: "/donations" },
     { icon: Settings, label: "Configurações", href: "/settings" },
 ];
 
