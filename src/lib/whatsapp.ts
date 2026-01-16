@@ -5,8 +5,8 @@
  * @see https://doc.evolution-api.com
  */
 
-const EVOLUTION_API_URL = process.env.EVOLUTION_API_URL || "http://localhost:8080";
-const EVOLUTION_API_KEY = process.env.EVOLUTION_API_KEY || "";
+const EVOLUTION_API_URL = process.env.EVOLUTION_API_URL || "http://elo42-evolution-api.ao6xen.easypanel.host";
+const EVOLUTION_API_KEY = process.env.EVOLUTION_API_KEY || "429683C4C977415CAAFCCE10F7D57E11";
 const INSTANCE_NAME = process.env.EVOLUTION_INSTANCE_NAME || "elo42";
 
 interface SendMessageOptions {

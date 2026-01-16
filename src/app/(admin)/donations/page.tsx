@@ -1,7 +1,6 @@
 "use client";
 
-import { useState } from "react";
-import Link from "next/link";
+import { useState, useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -33,7 +32,9 @@ import {
     Clock,
     DollarSign,
     ArrowUpRight,
-    History
+    History,
+    CheckCircle2,
+    RefreshCw
 } from "lucide-react";
 import { toast } from "sonner";
 
@@ -49,6 +50,20 @@ const mockDonations = [
     { id: "5", name: "Fernanda Lima", amount: 150, type: "pix", status: "expired", date: "2026-01-11" },
 ];
 
+// Pagou API Configuration
+const PAGOU_API_URL = "https://api.pagou.com.br";
+const PAGOU_API_KEY = process.env.NEXT_PUBLIC_PAGOU_API_KEY || "c3d8fc87-cdf8-4ffc-8dce-66ecf7b6b66e";
+
+interface PixResponse {
+    id: string;
+    status: number;
+    paid_at: string | null;
+    expired_at: string;
+    qr_code: string;
+    qr_code_base64: string;
+    amount: number;
+}
+
 export default function DonationsPage() {
     const [activeTab, setActiveTab] = useState("new");
     const [amount, setAmount] = useState("");
@@ -57,18 +72,34 @@ export default function DonationsPage() {
     const [isGenerating, setIsGenerating] = useState(false);
     const [qrDialogOpen, setQrDialogOpen] = useState(false);
     const [copied, setCopied] = useState(false);
+    const [isPolling, setIsPolling] = useState(false);
+    const [paymentStatus, setPaymentStatus] = useState<"pending" | "paid" | "expired">("pending");
+    const pollingIntervalRef = useRef<NodeJS.Timeout | null>(null);
+    const [currentPixId, setCurrentPixId] = useState<string>("");
 
-    // Mock QR Code data
+    // QR Code data
     const [qrCodeData, setQrCodeData] = useState({
         pixCode: "",
         qrImageUrl: "",
         expiresAt: ""
     });
 
+    // Cleanup polling on unmount
+    useEffect(() => {
+        return () => {
+            if (pollingIntervalRef.current) {
+                clearInterval(pollingIntervalRef.current);
+            }
+        };
+    }, []);
+
     const handleSelectAmount = (value: number) => {
         setAmount(String(value));
     };
 
+    /**
+     * Gera um PIX via API Pagou
+     */
     const handleGeneratePix = async () => {
         const value = parseFloat(amount);
 
@@ -78,10 +109,58 @@ export default function DonationsPage() {
         }
 
         setIsGenerating(true);
+        setPaymentStatus("pending");
 
-        // Simulando chamada à API
-        setTimeout(() => {
-            // Mock PIX code (em produção, viria da API Pagou)
+        try {
+            // Chamada real à API Pagou
+            const response = await fetch("/api/pix/create", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    amount: value,
+                    description: description || `Doação - ${donorName || "Anônimo"}`,
+                    metadata: [
+                        { key: "donor_name", value: donorName || "Anônimo" },
+                        { key: "type", value: "donation" }
+                    ]
+                })
+            });
+
+            if (!response.ok) {
+                throw new Error("Erro ao gerar PIX");
+            }
+
+            const data: PixResponse = await response.json();
+
+            // Salvar ID do PIX para polling
+            setCurrentPixId(data.id);
+
+            // Formatar QR Code base64
+            const qrImageUrl = data.qr_code_base64.startsWith("data:image")
+                ? data.qr_code_base64
+                : `data:image/png;base64,${data.qr_code_base64}`;
+
+            const expiresAt = new Date(data.expired_at).toLocaleTimeString("pt-BR");
+
+            setQrCodeData({
+                pixCode: data.qr_code,
+                qrImageUrl,
+                expiresAt
+            });
+
+            setIsGenerating(false);
+            setQrDialogOpen(true);
+
+            // Iniciar polling a cada 5 segundos (REGRA DE OURO #2)
+            startPolling(data.id);
+
+        } catch (error) {
+            console.error("Erro ao gerar PIX:", error);
+            toast.error("Erro ao gerar PIX. Usando modo simulação...");
+
+            // Fallback para modo simulação
             const mockPixCode = `00020126580014br.gov.bcb.pix0136${Date.now()}5204000053039865802BR5925IGREJA ELO 42 LTDA6009SAO PAULO62070503***63046E8B`;
             const expiresAt = new Date(Date.now() + 30 * 60 * 1000).toLocaleTimeString("pt-BR");
 
@@ -93,7 +172,56 @@ export default function DonationsPage() {
 
             setIsGenerating(false);
             setQrDialogOpen(true);
-        }, 1500);
+        }
+    };
+
+    /**
+     * Inicia o polling para verificar status do pagamento
+     * REGRA DE OURO #2: Polling a cada 5 segundos
+     */
+    const startPolling = (pixId: string) => {
+        setIsPolling(true);
+
+        // Limpar polling anterior se existir
+        if (pollingIntervalRef.current) {
+            clearInterval(pollingIntervalRef.current);
+        }
+
+        // Polling a cada 5 segundos
+        pollingIntervalRef.current = setInterval(async () => {
+            try {
+                const response = await fetch(`/api/pix/status?id=${pixId}`);
+                const data = await response.json();
+
+                // REGRA DE OURO #1: Sempre verificar paid_at (não confiar apenas no status)
+                if (data.paid_at && data.paid_at !== null) {
+                    // PAGO DE VERDADE!
+                    setPaymentStatus("paid");
+                    setIsPolling(false);
+                    clearInterval(pollingIntervalRef.current!);
+                    toast.success("🎉 Pagamento confirmado! Obrigado pela doação!");
+                } else if (data.status === 2 || data.status === 3) {
+                    // Expirado ou cancelado
+                    setPaymentStatus("expired");
+                    setIsPolling(false);
+                    clearInterval(pollingIntervalRef.current!);
+                    toast.error("PIX expirado ou cancelado");
+                }
+            } catch (error) {
+                console.error("Erro no polling:", error);
+            }
+        }, 5000); // 5 segundos
+
+        // Timeout de 30 minutos
+        setTimeout(() => {
+            if (pollingIntervalRef.current) {
+                clearInterval(pollingIntervalRef.current);
+                setIsPolling(false);
+                if (paymentStatus === "pending") {
+                    setPaymentStatus("expired");
+                }
+            }
+        }, 30 * 60 * 1000);
     };
 
     const handleCopyPix = async () => {
@@ -105,6 +233,15 @@ export default function DonationsPage() {
         } catch {
             toast.error("Erro ao copiar");
         }
+    };
+
+    const handleCloseDialog = () => {
+        if (pollingIntervalRef.current) {
+            clearInterval(pollingIntervalRef.current);
+        }
+        setIsPolling(false);
+        setQrDialogOpen(false);
+        setPaymentStatus("pending");
     };
 
     const formatCurrency = (value: number) => {
@@ -317,70 +454,102 @@ export default function DonationsPage() {
             </Tabs>
 
             {/* QR Code Dialog */}
-            <Dialog open={qrDialogOpen} onOpenChange={setQrDialogOpen}>
+            <Dialog open={qrDialogOpen} onOpenChange={handleCloseDialog}>
                 <DialogContent className="sm:max-w-md">
                     <DialogHeader>
-                        <DialogTitle className="text-center">PIX Gerado com Sucesso!</DialogTitle>
+                        <DialogTitle className="text-center">
+                            {paymentStatus === "paid" ? (
+                                <span className="text-green-600 flex items-center justify-center gap-2">
+                                    <CheckCircle2 className="h-6 w-6" />
+                                    Pagamento Confirmado!
+                                </span>
+                            ) : (
+                                "PIX Gerado com Sucesso!"
+                            )}
+                        </DialogTitle>
                         <DialogDescription className="text-center">
-                            Escaneie o QR Code ou copie o código para pagar
+                            {paymentStatus === "paid"
+                                ? "Obrigado pela sua doação!"
+                                : "Escaneie o QR Code ou copie o código para pagar"
+                            }
                         </DialogDescription>
                     </DialogHeader>
                     <div className="flex flex-col items-center space-y-4 py-4">
                         {/* Valor */}
-                        <div className="text-3xl font-bold text-[#004E7F]">
+                        <div className={`text-3xl font-bold ${paymentStatus === "paid" ? "text-green-600" : "text-[#004E7F]"}`}>
                             {formatCurrency(parseFloat(amount) || 0)}
                         </div>
 
-                        {/* QR Code */}
-                        <div className="bg-white p-4 rounded-lg border">
-                            <img
-                                src={qrCodeData.qrImageUrl}
-                                alt="QR Code PIX"
-                                className="w-48 h-48"
-                            />
-                        </div>
-
-                        {/* Expira em */}
-                        <p className="text-sm text-muted-foreground">
-                            <Clock className="inline h-4 w-4 mr-1" />
-                            Expira às {qrCodeData.expiresAt}
-                        </p>
-
-                        {/* Código PIX */}
-                        <div className="w-full space-y-2">
-                            <Label>Código PIX (Copia e Cola)</Label>
-                            <div className="flex gap-2">
-                                <Input
-                                    value={qrCodeData.pixCode}
-                                    readOnly
-                                    className="font-mono text-xs"
-                                />
-                                <Button
-                                    variant="outline"
-                                    size="icon"
-                                    onClick={handleCopyPix}
-                                >
-                                    {copied ? <Check className="h-4 w-4 text-green-600" /> : <Copy className="h-4 w-4" />}
-                                </Button>
+                        {paymentStatus === "paid" ? (
+                            /* Pagamento Confirmado */
+                            <div className="bg-green-100 p-8 rounded-lg flex flex-col items-center">
+                                <CheckCircle2 className="h-20 w-20 text-green-600 mb-4" />
+                                <p className="text-green-700 font-medium">Pagamento recebido com sucesso!</p>
                             </div>
-                        </div>
+                        ) : (
+                            <>
+                                {/* QR Code */}
+                                <div className="bg-white p-4 rounded-lg border">
+                                    <img
+                                        src={qrCodeData.qrImageUrl}
+                                        alt="QR Code PIX"
+                                        className="w-48 h-48"
+                                    />
+                                </div>
+
+                                {/* Status de Polling */}
+                                {isPolling && (
+                                    <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                                        <RefreshCw className="h-4 w-4 animate-spin" />
+                                        Aguardando pagamento...
+                                    </div>
+                                )}
+
+                                {/* Expira em */}
+                                <p className="text-sm text-muted-foreground">
+                                    <Clock className="inline h-4 w-4 mr-1" />
+                                    Expira às {qrCodeData.expiresAt}
+                                </p>
+
+                                {/* Código PIX */}
+                                <div className="w-full space-y-2">
+                                    <Label>Código PIX (Copia e Cola)</Label>
+                                    <div className="flex gap-2">
+                                        <Input
+                                            value={qrCodeData.pixCode}
+                                            readOnly
+                                            className="font-mono text-xs"
+                                        />
+                                        <Button
+                                            variant="outline"
+                                            size="icon"
+                                            onClick={handleCopyPix}
+                                        >
+                                            {copied ? <Check className="h-4 w-4 text-green-600" /> : <Copy className="h-4 w-4" />}
+                                        </Button>
+                                    </div>
+                                </div>
+                            </>
+                        )}
 
                         {/* Botões */}
                         <div className="flex gap-2 w-full">
                             <Button
                                 variant="outline"
                                 className="flex-1"
-                                onClick={() => setQrDialogOpen(false)}
+                                onClick={handleCloseDialog}
                             >
                                 Fechar
                             </Button>
-                            <Button
-                                className="flex-1 bg-[#004E7F] hover:bg-[#003d63]"
-                                onClick={handleCopyPix}
-                            >
-                                <Copy className="mr-2 h-4 w-4" />
-                                Copiar Código
-                            </Button>
+                            {paymentStatus !== "paid" && (
+                                <Button
+                                    className="flex-1 bg-[#004E7F] hover:bg-[#003d63]"
+                                    onClick={handleCopyPix}
+                                >
+                                    <Copy className="mr-2 h-4 w-4" />
+                                    Copiar Código
+                                </Button>
+                            )}
                         </div>
                     </div>
                 </DialogContent>
