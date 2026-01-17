@@ -2,12 +2,13 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Church, Loader2 } from "lucide-react";
+import { Loader2 } from "lucide-react";
 import { toast } from "sonner";
 
 export default function LoginPage() {
@@ -38,9 +39,14 @@ export default function LoginPage() {
         <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-[#004E7F]/5 via-white to-[#004E7F]/5 dark:from-gray-950 dark:via-gray-900 dark:to-gray-950 p-4">
             <Card className="w-full max-w-md border-0 shadow-2xl">
                 <CardHeader className="text-center pb-2">
-                    <Link href="/" className="inline-flex items-center justify-center gap-2 mb-4">
-                        <Church className="h-10 w-10 text-[#004E7F]" />
-                        <span className="font-bold text-2xl">Elo 42</span>
+                    <Link href="/" className="inline-flex items-center justify-center mb-4">
+                        <Image
+                            src="/logo.png"
+                            alt="Elo 42"
+                            width={180}
+                            height={60}
+                            className="h-auto"
+                        />
                     </Link>
                     <CardTitle className="text-2xl">Bem-vindo de volta</CardTitle>
                     <CardDescription>Entre com suas credenciais para acessar o painel</CardDescription>

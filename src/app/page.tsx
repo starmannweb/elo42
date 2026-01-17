@@ -1,10 +1,10 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import {
-  Church,
   Users,
   Calendar,
   DollarSign,
@@ -54,10 +54,15 @@ export default function HomePage() {
       {/* Header */}
       <header className="border-b bg-white/80 backdrop-blur-sm dark:bg-gray-950/80 sticky top-0 z-50">
         <div className="container mx-auto px-4 h-16 flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <Church className="h-8 w-8 text-[#004E7F]" />
-            <span className="font-bold text-xl">Elo 42</span>
-          </div>
+          <Link href="/" className="flex items-center">
+            <Image
+              src="/logo.png"
+              alt="Elo 42"
+              width={120}
+              height={40}
+              className="h-8 w-auto"
+            />
+          </Link>
           <nav className="hidden md:flex items-center gap-6">
             <Link href="#features" className="text-sm text-muted-foreground hover:text-foreground transition">
               Recursos
@@ -169,10 +174,15 @@ export default function HomePage() {
       <footer className="border-t bg-white/80 dark:bg-gray-950/80 backdrop-blur">
         <div className="container mx-auto px-4 py-8">
           <div className="flex flex-col md:flex-row items-center justify-between gap-4">
-            <div className="flex items-center gap-2">
-              <Church className="h-6 w-6 text-[#004E7F]" />
-              <span className="font-bold">Elo 42</span>
-            </div>
+            <Link href="/" className="flex items-center">
+              <Image
+                src="/logo.png"
+                alt="Elo 42"
+                width={100}
+                height={33}
+                className="h-6 w-auto"
+              />
+            </Link>
             <p className="text-sm text-muted-foreground">
               © 2026 Elo 42. Sistema de gestão para igrejas.
             </p>
