@@ -40,11 +40,6 @@ const features = [
     icon: Heart,
     title: "Solicitações",
     description: "Pedidos de oração, batismo e visitas em um só lugar."
-  },
-  {
-    icon: Sparkles,
-    title: "100% Gratuito",
-    description: "Sistema completo sem custos de hospedagem ou mensalidades."
   }
 ];
 
@@ -77,7 +72,7 @@ export default function HomePage() {
             </Link>
             <Link href="/register">
               <Button className="bg-[#004E7F] hover:bg-[#003d63]">
-                Começar Grátis
+                Cadastrar
               </Button>
             </Link>
           </div>
@@ -86,12 +81,7 @@ export default function HomePage() {
 
       {/* Hero */}
       <section className="container mx-auto px-4 py-20 md:py-32 text-center">
-        <div className="inline-flex items-center gap-2 bg-[#004E7F]/10 dark:bg-[#002540]/30 text-[#003d63] dark:text-violet-300 px-4 py-2 rounded-full text-sm font-medium mb-6">
-          <Sparkles className="h-4 w-4" />
-          Sistema 100% Gratuito
-        </div>
-
-        <h1 className="text-4xl md:text-6xl font-bold tracking-tight mb-6 bg-gradient-to-r from-[#004E7F] via-[#004E7F] to-[#003050] bg-clip-text text-transparent">
+        <h1 className="text-4xl md:text-6xl font-bold tracking-tight mb-6 text-[#004E7F]">
           Gestão completa para<br />sua igreja
         </h1>
 
@@ -103,7 +93,7 @@ export default function HomePage() {
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
           <Link href="/register">
             <Button size="lg" className="bg-[#004E7F] hover:bg-[#003d63] text-lg px-8">
-              Criar Conta Grátis
+              Criar Conta
               <ArrowRight className="ml-2 h-5 w-5" />
             </Button>
           </Link>
@@ -112,17 +102,6 @@ export default function HomePage() {
               Acessar Painel
             </Button>
           </Link>
-        </div>
-
-        <div className="flex items-center justify-center gap-6 mt-8 text-sm text-muted-foreground">
-          <div className="flex items-center gap-2">
-            <CheckCircle2 className="h-4 w-4 text-green-600" />
-            Sem cartão de crédito
-          </div>
-          <div className="flex items-center gap-2">
-            <CheckCircle2 className="h-4 w-4 text-green-600" />
-            Setup em 5 minutos
-          </div>
         </div>
       </section>
 

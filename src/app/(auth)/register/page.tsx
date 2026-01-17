@@ -54,7 +54,7 @@ export default function RegisterPage() {
                         />
                     </Link>
                     <CardTitle className="text-2xl">Criar conta</CardTitle>
-                    <CardDescription>Comece a gerenciar sua igreja gratuitamente</CardDescription>
+                    <CardDescription>Comece a gerenciar sua igreja agora</CardDescription>
                 </CardHeader>
                 <CardContent>
                     <form onSubmit={handleSubmit} className="space-y-4">

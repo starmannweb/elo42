@@ -12,8 +12,8 @@ export const metadata: Metadata = {
   description: "Plataforma completa para gestão de igrejas: membros, eventos, finanças, ministrações e muito mais.",
   manifest: "/manifest.json",
   icons: {
-    icon: "/icon.svg",
-    apple: "/icons/icon-192x192.png",
+    icon: "/favicon.png",
+    apple: "/favicon.png",
   },
   appleWebApp: {
     capable: true,
@@ -42,8 +42,8 @@ export default function RootLayout({
       <body className={`${inter.className} antialiased`}>
         <ThemeProvider
           attribute="class"
-          defaultTheme="system"
-          enableSystem
+          defaultTheme="light"
+          enableSystem={false}
           disableTransitionOnChange
         >
           <ServiceWorkerRegistration />
